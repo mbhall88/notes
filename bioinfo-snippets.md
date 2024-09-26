@@ -1,4 +1,4 @@
-Extract the CheckM stats for an assembly accession
+### Extract the CheckM stats for an assembly accession
 
 ```
 $ datasets summary genome accession GCF_019454365.1 | jq '.reports' | jq '.[0]' | jq '.checkm_info'
@@ -43,7 +43,7 @@ print(json.dumps(report["checkm_info"], indent=4))
 
 ---
 
-Get collection date and geographical location for a list of biosample accessions
+### Get collection date and geographical location for a list of biosample accessions
 
 ```
 efetch -db biosample -input accessions.txt -mode xml | 
@@ -62,7 +62,7 @@ SAMN35995984    collection_date: 2017   geo_loc_name: USA
 
 ---
 
-Convert a VCF file to BED
+### Convert a VCF file to BED
 
 ```
 bcftools query -f '%CHROM\t%POS0\t%POS\n' in.vcf
@@ -70,7 +70,7 @@ bcftools query -f '%CHROM\t%POS0\t%POS\n' in.vcf
 
 ---
 
-Download an assembly, or assemblies, by accession
+### Download an assembly, or assemblies, by accession
 
 ```
 ncbi-genome-download -A GCF_000285655.3 -P -F fasta bacteria
@@ -80,13 +80,13 @@ ncbi-genome-download -A GCF_000285655.3 -P -F fasta bacteria
 
 ---
 
-Change the chromosome name in a VCF
+### Change the chromosome name in a VCF
 
 echo -e "old_chr\tnew_chrom" | bcftools annotate --rename-chrs - in.vcf
 
 ---
 
-Get depth of coverage as a BED from a BAM file
+### Get depth of coverage as a BED from a BAM file
 
 ```
 $ bedtools genomecov -ibam in.bam -bga > out.bed
@@ -118,7 +118,7 @@ $ mosdepth prefix in.bam
 
 ---
 
-Sort a fastq file by length without reading the whole thing into memory.
+### Sort a fastq file by length without reading the whole thing into memory.
 
 ```
 gzip -dc in.fq.gz | 
