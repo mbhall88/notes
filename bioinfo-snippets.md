@@ -1,3 +1,21 @@
+## Table of contents
+
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [Extract the CheckM stats for an assembly accession](#extract-the-checkm-stats-for-an-assembly-accession)
+- [Get collection date and geographical location for a list of biosample accessions](#get-collection-date-and-geographical-location-for-a-list-of-biosample-accessions)
+- [Convert a VCF file to BED](#convert-a-vcf-file-to-bed)
+- [Download an assembly, or assemblies, by accession](#download-an-assembly-or-assemblies-by-accession)
+- [Change the chromosome name in a VCF](#change-the-chromosome-name-in-a-vcf)
+- [Get depth of coverage as a BED from a BAM file](#get-depth-of-coverage-as-a-bed-from-a-bam-file)
+- [Sort a fastq file by length without reading the whole thing into memory.](#sort-a-fastq-file-by-length-without-reading-the-whole-thing-into-memory)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="extract-the-checkm-stats-for-an-assembly-accession"></a>
+
+---
+
 ### Extract the CheckM stats for an assembly accession
 
 ```
