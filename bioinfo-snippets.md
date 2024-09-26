@@ -117,3 +117,20 @@ $ mosdepth prefix in.bam
 ```
 
 ---
+
+Sort a fastq file by length without reading the whole thing into memory.
+
+```
+gzip -dc in.fq.gz | 
+  paste - - - - | 
+  perl -ne '@x=split m/\t/; unshift @x, length($x[1]); print join "\t",@x;' | 
+  sort -n | 
+  cut -f2- | 
+  tr "\t" "\n" > len_sorted.fq
+```
+
+Credit: <https://thegenomefactory.blogspot.com/2012/11/sorting-fastq-files-by-sequence-length.html>.
+
+This works surprisingly fast and with very little memory. On a 431 MB (compressed) fastq file, it took 7.27 seconds (wall clock) and used 1.2 MB of memory.
+
+---
