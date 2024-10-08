@@ -88,4 +88,14 @@ sacct --format="JobID,JobName%150" -j <jobid>
 
 ---
 
+Count the number of different job states in your job history
+
+```
+sacct -nb | tr -s ' ' | cut -d' ' -f2 | sort | uniq -c
+```
+
+`-n` means no header, `-b` means brief, `-s` in `tr` compresses runs of space into a single space
+
+---
+
 [fairshare]: https://slurm.schedmd.com/classic_fair_share.html
