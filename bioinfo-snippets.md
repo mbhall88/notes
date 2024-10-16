@@ -10,6 +10,7 @@
 - [Get depth of coverage as a BED from a BAM file](#get-depth-of-coverage-as-a-bed-from-a-bam-file)
 - [Sort a fastq file by length without reading the whole thing into memory.](#sort-a-fastq-file-by-length-without-reading-the-whole-thing-into-memory)
 - [Download summaries for all bacterial assemblies in RefSeq](#download-summaries-for-all-bacterial-assemblies-in-refseq)
+- [Get Run accessions for a BioSample accession](#get-run-accessions-for-a-biosample-accession)
 
 <!-- TOC end -->
 
@@ -250,3 +251,19 @@ dataformat tsv genome --inputfile bacteria.jsonl --fields $FIELDS > bacteria.tsv
 ```
 
 a full list of fields can be found [here](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/tsv/dataformat_tsv_genome/).
+
+---
+
+<!-- TOC --><a name="get-run-accessions-for-a-biosample-accession"></a>
+### Get Run accessions for a BioSample accession
+
+```
+$ biosample=SAMN31564381
+$ fields=run_accession,instrument_platform
+$ curl "https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&format=tsv&query=sample_accession=${biosample}&fields=${fields}"
+run_accession   instrument_platform
+SRR22225500     ILLUMINA
+SRR22225499     OXFORD_NANOPORE
+```
+
+the full list of available fields can be found [here](https://ena-docs.readthedocs.io/en/latest/retrieval/programmatic-access/advanced-search.html#what-fields-can-i-use-in-my-search). Alternatively, the [EBI advanced search](https://www.ebi.ac.uk/ena/browser/advanced-search) can be used to construct queries and then copy the corresponding `curl` command - and there is also a link to the API docs. The swagger API docs where you can run test queries is [here](https://www.ebi.ac.uk/ena/portal/api/swagger-ui/index.html).
