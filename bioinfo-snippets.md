@@ -9,13 +9,14 @@
 - [Change the chromosome name in a VCF](#change-the-chromosome-name-in-a-vcf)
 - [Get depth of coverage as a BED from a BAM file](#get-depth-of-coverage-as-a-bed-from-a-bam-file)
 - [Sort a fastq file by length without reading the whole thing into memory.](#sort-a-fastq-file-by-length-without-reading-the-whole-thing-into-memory)
+- [Download summaries for all bacterial assemblies in RefSeq](#download-summaries-for-all-bacterial-assemblies-in-refseq)
 
 <!-- TOC end -->
 
-<!-- TOC --><a name="extract-the-checkm-stats-for-an-assembly-accession"></a>
 
 ---
 
+<!-- TOC --><a name="extract-the-checkm-stats-for-an-assembly-accession"></a>
 ### Extract the CheckM stats for an assembly accession
 
 ```
@@ -61,6 +62,7 @@ print(json.dumps(report["checkm_info"], indent=4))
 
 ---
 
+<!-- TOC --><a name="get-collection-date-and-geographical-location-for-a-list-of-biosample-accessions"></a>
 ### Get collection date and geographical location for a list of biosample accessions
 
 ```
@@ -80,6 +82,7 @@ SAMN35995984    collection_date: 2017   geo_loc_name: USA
 
 ---
 
+<!-- TOC --><a name="convert-a-vcf-file-to-bed"></a>
 ### Convert a VCF file to BED
 
 ```
@@ -88,6 +91,7 @@ bcftools query -f '%CHROM\t%POS0\t%POS\n' in.vcf
 
 ---
 
+<!-- TOC --><a name="download-an-assembly-or-assemblies-by-accession"></a>
 ### Download an assembly, or assemblies, by accession
 
 ```
@@ -98,12 +102,14 @@ ncbi-genome-download -A GCF_000285655.3 -P -F fasta bacteria
 
 ---
 
+<!-- TOC --><a name="change-the-chromosome-name-in-a-vcf"></a>
 ### Change the chromosome name in a VCF
 
 echo -e "old_chr\tnew_chrom" | bcftools annotate --rename-chrs - in.vcf
 
 ---
 
+<!-- TOC --><a name="get-depth-of-coverage-as-a-bed-from-a-bam-file"></a>
 ### Get depth of coverage as a BED from a BAM file
 
 ```
@@ -136,6 +142,7 @@ $ mosdepth prefix in.bam
 
 ---
 
+<!-- TOC --><a name="sort-a-fastq-file-by-length-without-reading-the-whole-thing-into-memory"></a>
 ### Sort a fastq file by length without reading the whole thing into memory.
 
 ```
@@ -221,3 +228,25 @@ $ python is_len_sorted.py len_sorted.fq
 The file is sorted by length
 ```
 ---
+
+<!-- TOC --><a name="download-summaries-for-all-bacterial-assemblies-in-refseq"></a>
+### Download summaries for all bacterial assemblies in RefSeq
+
+Using the NCBI's [`datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) command line tools.
+
+```
+$ datasets summary genome taxon bacteria --as-json-lines --assembly-source RefSeq --assembly-level complete --assembly-version latest --mag exclude > bacteria.jsonl
+```
+
+this ensures that we only get summaries for 'complete' assemblies
+
+> A Complete assembly in RefSeq means that the genome is fully assembled, with no gaps, and typically represents the entire genome. All chromosomes and extra-chromosomal elements (e.g., plasmids or organelle genomes) are completely represented.
+
+This can then be converted to a TSV and extract fields of interest with
+
+```
+FIELDS="accession,organism-name,organism-tax-id,assminfo-bioproject,assminfo-biosample-accession,assminfo-name"
+dataformat tsv genome --inputfile bacteria.jsonl --fields $FIELDS > bacteria.tsv
+```
+
+a full list of fields can be found [here](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/tsv/dataformat_tsv_genome/).
