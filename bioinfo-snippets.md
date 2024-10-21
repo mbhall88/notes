@@ -252,6 +252,14 @@ dataformat tsv genome --inputfile bacteria.jsonl --fields $FIELDS > bacteria.tsv
 
 a full list of fields can be found [here](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/tsv/dataformat_tsv_genome/).
 
+You can also download these summaries for a single accession with
+
+```
+datasets summary genome accession GCF_000006945.2 | jq '.reports[0].assembly_info.biosample.accession'
+```
+
+the above example will give you the biosample accession.
+
 ---
 
 <!-- TOC --><a name="get-run-accessions-for-a-biosample-accession"></a>
@@ -267,3 +275,9 @@ SRR22225499     OXFORD_NANOPORE
 ```
 
 the full list of available fields can be found [here](https://ena-docs.readthedocs.io/en/latest/retrieval/programmatic-access/advanced-search.html#what-fields-can-i-use-in-my-search). Alternatively, the [EBI advanced search](https://www.ebi.ac.uk/ena/browser/advanced-search) can be used to construct queries and then copy the corresponding `curl` command - and there is also a link to the API docs. The swagger API docs where you can run test queries is [here](https://www.ebi.ac.uk/ena/portal/api/swagger-ui/index.html).
+
+Alternatively, if there are no runs, you can use the sample data type as such
+
+```
+curl "https://www.ebi.ac.uk/ena/portal/api/search?result=sample&format=tsv&query=sample_accession=${biosample}&fields=all"
+```
