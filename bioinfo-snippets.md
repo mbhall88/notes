@@ -11,6 +11,7 @@
 - [Sort a fastq file by length without reading the whole thing into memory.](#sort-a-fastq-file-by-length-without-reading-the-whole-thing-into-memory)
 - [Download summaries for all bacterial assemblies in RefSeq](#download-summaries-for-all-bacterial-assemblies-in-refseq)
 - [Get Run accessions for a BioSample accession](#get-run-accessions-for-a-biosample-accession)
+- [Install and use Aspera to download from ENA/SRA](#install-and-use-aspera-to-download-from-enasra)
 
 <!-- TOC end -->
 
@@ -280,4 +281,24 @@ Alternatively, if there are no runs, you can use the sample data type as such
 
 ```
 curl "https://www.ebi.ac.uk/ena/portal/api/search?result=sample&format=tsv&query=sample_accession=${biosample}&fields=all"
+```
+
+---
+
+<!-- TOC --><a name="install-and-use-aspera-to-download-from-enasra"></a>
+### Install and use Aspera to download from ENA/SRA
+
+This is all taken from [this amazing tutorial](https://www.biostars.org/p/9528910/).
+
+```
+wget https://ak-delivery04-mul.dhe.ibm.com/sar/CMA/OSA/0adrj/0/ibm-aspera-connect_4.1.3.93_linux.tar.gz
+tar zxvf ibm-aspera-connect_4.1.3.93_linux.tar.gz
+bash ibm-aspera-connect_4.1.3.93_linux.sh
+$HOME/.aspera/connect/bin/ascp --version
+```
+
+Test it out
+
+```
+ascp -QT -l 300m -P33001 -i $HOME/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR144/004/SRR1448774/SRR1448774.fastq.gz .
 ```
