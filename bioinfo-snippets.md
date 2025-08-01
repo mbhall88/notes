@@ -12,6 +12,7 @@
 - [Download summaries for all bacterial assemblies in RefSeq](#download-summaries-for-all-bacterial-assemblies-in-refseq)
 - [Get Run accessions for a BioSample accession](#get-run-accessions-for-a-biosample-accession)
 - [Install and use Aspera to download from ENA/SRA](#install-and-use-aspera-to-download-from-enasra)
+- [Extract taxon ID for list of GenBank accessions](#extract-taxon-id-for-list-of-genbank-accessions)
 
 <!-- TOC end -->
 
@@ -301,4 +302,30 @@ Test it out
 
 ```
 ascp -QT -l 300m -P33001 -i $HOME/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR144/004/SRR1448774/SRR1448774.fastq.gz .
+```
+
+---
+
+<!-- TOC --><a name="extract-taxon-id-for-list-of-genbank-accessions"></a>
+### Extract taxon ID for list of GenBank accessions
+
+(From the master, Wei Shen) extract them from https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz
+
+```
+zcat nucl_gb.accession2taxid.gz \
+    | csvtk grep -t -f accession.version -P accs.txt \
+    | csvtk cut -t -f accession.version,taxid
+```
+
+or using NCBI tools
+
+```
+cat accs.txt
+LR789484.1
+BC034131.1
+BC149740.1
+epost -db nucleotide -input accs.txt | esummary | xtract -pattern DocumentSummary -element AccessionVersion,TaxId,Organism
+LR789484.1      59560   Phallusia mammillata
+BC034131.1      10090   Mus musculus
+BC149740.1      9913    Bos taurus
 ```
