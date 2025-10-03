@@ -284,6 +284,16 @@ Alternatively, if there are no runs, you can use the sample data type as such
 curl "https://www.ebi.ac.uk/ena/portal/api/search?result=sample&format=tsv&query=sample_accession=${biosample}&fields=all"
 ```
 
+To do the inverse, that is search for a BioSample accession from a Run accession
+
+```bash
+$ run=SRR31614351
+$ fields=collection_date,country,first_public,location,sample_accession,sample_alias,study_accession
+$ curl "https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&format=tsv&query=run_accession=${run}&fields=${fields}"
+run_accession   country first_public    location        sample_accession        sample_alias    study_accession collection_date
+SRR31614351     Australia:Victoria      2024-12-08              SAMN45172763    AUSMDU00004212  PRJNA856406     2015-11-30
+```
+
 ---
 
 <!-- TOC --><a name="install-and-use-aspera-to-download-from-enasra"></a>
