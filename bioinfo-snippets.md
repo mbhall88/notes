@@ -103,6 +103,13 @@ ncbi-genome-download -A GCF_000285655.3 -P -F fasta bacteria
 
 `-A` can be a comma separated list of a file to accessions
 
+or if you have a GenBank accession for a sequence, just as a plasmid
+
+```
+acc="LC495616.1"
+esearch -db nucleotide -query $acc | efetch -format fasta > ${acc}.fasta
+```
+
 ---
 
 <!-- TOC --><a name="change-the-chromosome-name-in-a-vcf"></a>
